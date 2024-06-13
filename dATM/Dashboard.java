@@ -26,6 +26,7 @@ public class Dashboard extends JFrame {
 	private Balance balance;
 	private Withdraw withdraw;
 	private Deposit deposit;
+	private DeactivateAccount deactivate;
 	private DefaultTableModel database;
 	private int i;
 	private String a;
@@ -112,6 +113,13 @@ public class Dashboard extends JFrame {
 		depositBtn.setBounds(55, 506, 435, 159);
 		contentPane.add(depositBtn);
 		
+		JButton deactivateBtn = new JButton("DEACTIVATE");
+		deactivateBtn.setForeground(new Color(0, 102, 51));
+		deactivateBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
+		deactivateBtn.setBackground(new Color(255, 127, 127));
+		deactivateBtn.setBounds(527, 506, 435, 159);
+		contentPane.add(deactivateBtn);
+		
 //		------------- EVENTS -----------
 		
 		CBbtn.addActionListener(new ActionListener() {	
@@ -139,6 +147,15 @@ public class Dashboard extends JFrame {
 				deposit = new Deposit(database, i, a);
 				deposit.setVisible(true);
 				deposit.setLocationRelativeTo(null);
+				Dashboard.this.dispose();
+			}
+		});
+
+		deactivateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deactivate = new DeactivateAccount(database, i);
+				deactivate.setVisible(true);
+				deactivate.setLocationRelativeTo(null);
 				Dashboard.this.dispose();
 			}
 		});
