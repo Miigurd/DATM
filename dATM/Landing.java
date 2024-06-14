@@ -89,20 +89,20 @@ public class Landing extends JFrame {
         setContentPane(bgPane);
         bgPane.setLayout(null);
         
-        JPanel loginPanel = new JPanel();
-        loginPanel.setBackground(SystemColor.control);
-        loginPanel.setBounds(46, 71, 410, 634);
-        loginPanel.setLayout(null);
+        JPanel loginPnl = new JPanel();
+        loginPnl.setBackground(SystemColor.control);
+        loginPnl.setBounds(46, 71, 410, 634);
+        loginPnl.setLayout(null);
         
         JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
         logoPnl.setBounds(55, 80, 310, 100);
         
-        JLabel userLabel = new JLabel("USER LOGIN");
-        userLabel.setBounds(31, 221, 352, 31);
-        userLabel.setFont(new Font("Poppins", Font.BOLD, 25));
-        userLabel.setBackground(Color.GREEN);
-        userLabel.setForeground(new Color(46, 139, 87));
-        userLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel userLbl = new JLabel("USER LOGIN");
+        userLbl.setBounds(31, 221, 352, 31);
+        userLbl.setFont(new Font("Poppins", Font.BOLD, 25));
+        userLbl.setBackground(Color.GREEN);
+        userLbl.setForeground(new Color(46, 139, 87));
+        userLbl.setHorizontalAlignment(SwingConstants.CENTER);
         
         JPanel userLblPane = new RoundedPanel(30);
         userLblPane.setBounds(31, 210, 350, 53);
@@ -117,29 +117,29 @@ public class Landing extends JFrame {
         userTextField.setHorizontalAlignment(SwingConstants.CENTER);
         userTextField.setColumns(10);
         
-        JLabel activateLabel = new JLabel("Activate Account");
-        activateLabel.setBounds(3, 435, 410, 39);
-        activateLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 12));
-        activateLabel.setForeground(new Color(46, 139, 87));
-        activateLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel activateLbl = new JLabel("Activate Account");
+        activateLbl.setBounds(3, 435, 410, 39);
+        activateLbl.setFont(new Font("Poppins Medium", Font.PLAIN, 12));
+        activateLbl.setForeground(new Color(46, 139, 87));
+        activateLbl.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JButton loginBTN = new RoundedButton("Login");
-        loginBTN.setBounds(140, 400, 136, 40);
-        loginBTN.setBackground(new Color(26, 172, 119));
+        JButton loginBtn = new RoundedButton("Login");
+        loginBtn.setBounds(140, 400, 136, 40);
+        loginBtn.setBackground(new Color(26, 172, 119));
         
         // ------------- ADDING COMPONENTS -------------
 
-        bgPane.add(loginPanel);
-        loginPanel.add(logoPnl);
-        loginPanel.add(userLabel);
-        loginPanel.add(userLblPane);
-        loginPanel.add(profileIcon);
-        loginPanel.add(userTextField);
-        loginPanel.add(activateLabel);
-        loginPanel.add(loginBTN);
+        bgPane.add(loginPnl);
+        loginPnl.add(logoPnl);
+        loginPnl.add(userLbl);
+        loginPnl.add(userLblPane);
+        loginPnl.add(profileIcon);
+        loginPnl.add(userTextField);
+        loginPnl.add(activateLbl);
+        loginPnl.add(loginBtn);
         
         // ------------- EVENTS -------------
-        loginBTN.addMouseListener(new MouseAdapter() {
+        loginBtn.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		for(int i = 0; i < database.getRowCount(); i++) {
@@ -181,7 +181,7 @@ public class Landing extends JFrame {
             }
         });
         
-        activateLabel.addMouseListener(new MouseAdapter() {
+        activateLbl.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		activate = new ActivateAccount(database, i);
