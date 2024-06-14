@@ -7,25 +7,19 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
-
 
 public class Balance extends JFrame {
 
@@ -35,8 +29,6 @@ public class Balance extends JFrame {
     private Dashboard dashboard;
    	private DefaultTableModel database;
    	private int i;
- 
-       
 
     /**
      * Launch the application.
@@ -85,22 +77,21 @@ public class Balance extends JFrame {
         };
 
         bgPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        bgPane.setLayout(null); // Allow for absolute positioning
+        bgPane.setLayout(null);
         setContentPane(bgPane);
 
-        // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Desktop\\School\\1CS-A\\2nd Sem\\CCS103\\dATM img\\Dangal ATM Dashboard.png");
-        logoPanel.setBounds(380, 80, 250, 100);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Desktop\\School\\1CS-A\\2nd Sem\\CCS103\\dATM img\\Dangal ATM Dashboard.png");
+        logoPnl.setBounds(380, 80, 250, 100);
         
         JPanel balancePnl = new JPanel();
         balancePnl.setLayout(null);
         balancePnl.setBounds(40, 230, 930, 480);
         balancePnl.setBackground(new Color(255, 255, 255));
         
-        JLabel lblCheckBalance = new JLabel("Check Balance");
-        lblCheckBalance.setBounds(60, 25, 307, 43);
-        lblCheckBalance.setFont(new Font("Tahoma", Font.BOLD, 35));
-        lblCheckBalance.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel checkBalanceLbl = new JLabel("Check Balance");
+        checkBalanceLbl.setBounds(60, 25, 307, 43);
+        checkBalanceLbl.setFont(new Font("Tahoma", Font.BOLD, 35));
+        checkBalanceLbl.setHorizontalAlignment(SwingConstants.CENTER);
         
         JLabel accInfoLbl = new JLabel("Account Information: ");
         accInfoLbl.setBounds(114, 79, 336, 33);
@@ -117,9 +108,9 @@ public class Balance extends JFrame {
 		nameLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
 		nameLbl.setForeground(new Color(17, 141, 87));
         
-        JLabel clientNumLbl = new JLabel("Client No.:");
-        clientNumLbl.setBounds(140, 140, 108, 30);
-        clientNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
+        JLabel studNumLbl = new JLabel("Client No.:");
+        studNumLbl.setBounds(140, 140, 108, 30);
+        studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
         
         JLabel numberLbl = new JLabel();
         String getNum = (String) database.getValueAt(i, 0);
@@ -157,15 +148,15 @@ public class Balance extends JFrame {
 		confirmBtn.setBackground(new Color(26, 172, 119));
 		confirmBtn.setForeground(new Color(240, 255, 255));
         
-        // ------------- ADD COMPONENTS TO PANEL -------------
+        // ------------- ADDING COMPONENTS -------------
 
-        bgPane.add(logoPanel);
+        bgPane.add(logoPnl);
         bgPane.add(balancePnl);
-        balancePnl.add(lblCheckBalance);
+        balancePnl.add(checkBalanceLbl);
         balancePnl.add(accInfoLbl);
         balancePnl.add(accNameLbl);
         balancePnl.add(nameLbl);
-        balancePnl.add(clientNumLbl);
+        balancePnl.add(studNumLbl);
         balancePnl.add(numberLbl);
         balancePnl.add(currentLbl);
 		balancePnl.add(pesoLbl);

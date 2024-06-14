@@ -24,7 +24,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -37,14 +36,10 @@ import javax.swing.JPasswordField;
 public class ActivateAccount extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JFrame frame;
-    private JPanel ActivateAccountPane;
+    private JPanel bgPane;
     private BufferedImage backgroundImage;
-    private JTextField nameTextField;
-	private JTextField studNumTxtField;
 	private DefaultTableModel database;
 	private int i;
-	private JPasswordField pinField;
 	private Landing login;
 	
     /**
@@ -82,7 +77,7 @@ public class ActivateAccount extends JFrame {
         }
 
         // Background panel
-        ActivateAccountPane = new JPanel() {
+        bgPane = new JPanel() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -94,79 +89,88 @@ public class ActivateAccount extends JFrame {
             }
         };
 
-        ActivateAccountPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(ActivateAccountPane);
-        ActivateAccountPane.setLayout(null);
+        bgPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(bgPane);
+        bgPane.setLayout(null);
         
-        JPanel loginPanel = new JPanel();
-        loginPanel.setBackground(SystemColor.control);
-        loginPanel.setBounds(46, 71, 410, 634);
-        ActivateAccountPane.add(loginPanel);
-        loginPanel.setLayout(null);
+        JPanel activatePnl = new JPanel();
+        activatePnl.setBackground(SystemColor.control);
+        activatePnl.setBounds(46, 71, 410, 634);
+        activatePnl.setLayout(null);
         
-        // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
-        logoPanel.setBounds(55, 80, 310, 100);
-        loginPanel.add(logoPanel);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
+        logoPnl.setBounds(55, 80, 310, 100);
         
-        JLabel customerLabel = new JLabel("Activate Account");
-        customerLabel.setForeground(new Color(46, 139, 87));
-        customerLabel.setFont(new Font("Poppins", Font.BOLD, 25));
-        customerLabel.setBackground(Color.GREEN);
-        customerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        customerLabel.setBounds(31, 221, 352, 31);
-        loginPanel.add(customerLabel);
+        JLabel activateLbl = new JLabel("Activate Account");
+        activateLbl.setBounds(31, 221, 352, 31);
+        activateLbl.setFont(new Font("Poppins", Font.BOLD, 25));
+        activateLbl.setBackground(Color.GREEN);
+        activateLbl.setForeground(new Color(46, 139, 87));
+        activateLbl.setHorizontalAlignment(SwingConstants.CENTER);
         
-        // Custom panel with rounded corners
-        JPanel cuslblPane = new RoundedPanel(30); 
-        cuslblPane.setBackground(new Color(144, 238, 144));
-        cuslblPane.setBounds(31, 210, 350, 53);
-        loginPanel.add(cuslblPane);
+        JPanel activateLblPane = new RoundedPanel(30); 
+        activateLblPane.setBounds(31, 210, 350, 53);
+        activateLblPane.setBackground(new Color(144, 238, 144));
         
+        JLabel nameLbl = new JLabel("Name:");
+        nameLbl.setBounds(10, 294, 110, 31);
+        nameLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
+        nameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         
+        JTextField nameTxtField = new JTextFieldLimit(7);
+        nameTxtField.setBounds(128, 294, 241, 31);
+        nameTxtField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        nameTxtField.setColumns(10);
         
-        nameTextField = new JTextFieldLimit(7);
-        nameTextField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        nameTextField.setBounds(128, 294, 241, 31);
-        loginPanel.add(nameTextField);
-        nameTextField.setColumns(10);
+        JLabel studNumLbl = new JLabel("Student Number:");
+        studNumLbl.setBounds(10, 349, 110, 31);
+        studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
+        studNumLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        JButton loginBTN = new RoundedButton("Activate");
-        loginBTN.setBackground(new Color(102, 255, 102));
-        loginBTN.setBounds(130, 470, 136, 40);
-        loginPanel.add(loginBTN);	
-        
-        JLabel lblNewLabel = new JLabel("Enter Your Name :");
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-        lblNewLabel.setBounds(10, 294, 122, 31);
-        loginPanel.add(lblNewLabel);
-        
-        studNumTxtField = new JTextField();
+        JTextField studNumTxtField = new JTextField();
+        studNumTxtField.setBounds(128, 349, 241, 31);
         studNumTxtField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         studNumTxtField.setColumns(10);
-        studNumTxtField.setBounds(128, 349, 241, 31);
-        loginPanel.add(studNumTxtField);
         
-        JLabel studNumLbl = new JLabel("Student Number :");
-        studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        studNumLbl.setBounds(10, 349, 122, 31);
-        loginPanel.add(studNumLbl);
-        
-        JLabel pinLbl = new JLabel("Enter Your Pin :");
+        JLabel pinLbl = new JLabel("PIN:");
+        pinLbl.setBounds(10, 403, 110, 31);
         pinLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        pinLbl.setBounds(10, 403, 108, 31);
-        loginPanel.add(pinLbl);
+        pinLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        pinField = new JPasswordFieldLimit(6);
-        pinField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        JPasswordField pinField = new JPasswordFieldLimit(6);
         pinField.setBounds(128, 403, 241, 31);
-        loginPanel.add(pinField);
+        pinField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        
+        JButton loginBtn = new RoundedButton("Activate");
+        loginBtn.setBounds(140, 470, 136, 40);
+        loginBtn.setBackground(new Color(102, 255, 102));
+        
+        JLabel loginLbl = new JLabel("Login");
+        loginLbl.setBounds(3, 505, 410, 39);
+        loginLbl.setFont(new Font("Poppins Medium", Font.PLAIN, 12));
+        loginLbl.setForeground(new Color(46, 139, 87));
+        loginLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // ------------- ADDING COMPONENTS -------------
+
+        bgPane.add(activatePnl);
+        activatePnl.add(logoPnl);
+        activatePnl.add(activateLbl);
+        activatePnl.add(activateLblPane);
+        activatePnl.add(nameLbl);
+        activatePnl.add(nameTxtField);
+        activatePnl.add(studNumLbl);
+        activatePnl.add(studNumTxtField);
+        activatePnl.add(pinLbl);
+        activatePnl.add(pinField);
+        activatePnl.add(loginBtn);
+        activatePnl.add(loginLbl);
         
         // ------------- EVENTS -------------
         
-        loginBTN.addActionListener(new ActionListener() {
+        loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (studNumTxtField.getText().equals("") || nameTextField.getText().equals("") || pinField.getText().equals("")) {
+				if (studNumTxtField.getText().equals("") || nameTxtField.getText().equals("") || pinField.getText().equals("")) {
 					JOptionPane.showMessageDialog(ActivateAccount.this, "Make sure that all fields are not empty!");
 				} else if (studNumTxtField.getText().length() != 7 || pinField.getText().length() != 6) {
 					if (studNumTxtField.getText().length() != 7) {
@@ -177,27 +181,38 @@ public class ActivateAccount extends JFrame {
 						JOptionPane.showMessageDialog(ActivateAccount.this, "PIN No. needs exactly 6 characters!");
 					}
 				} else {
-					String sn = studNumTxtField.getText();
-					String name = nameTextField.getText();
-					String bal = "0.00";
-					String pin = pinField.getText();
-					
-					Object[] data = {sn, name, bal, pin};
-					database.addRow(data);
-					
-					login = new Landing(database, i);
-					login.setVisible(true);
-					login.setLocationRelativeTo(null);
-					ActivateAccount.this.dispose();
+					boolean studentExists = false;
+					for (int j = 0; j < database.getRowCount(); j++) {
+						if (studNumTxtField.getText().equals(database.getValueAt(j, 0))) {
+							studentExists = true;
+							JOptionPane.showMessageDialog(ActivateAccount.this, "This student number has already been activated!");
+							studNumTxtField.setText(null);
+							break;
+						}
+					}
+					if (!studentExists) {
+						String sn = studNumTxtField.getText();
+						String name = nameTxtField.getText();
+						String bal = "0.00";
+						String pin = pinField.getText();
+						
+						Object[] data = {sn, name, bal, pin};
+						database.addRow(data);
+						
+						login = new Landing(database, i);
+						login.setVisible(true);
+						login.setLocationRelativeTo(null);
+						ActivateAccount.this.dispose();
+					}
 				}
 			}
 		});
         
-        nameTextField.addKeyListener(new KeyAdapter() {
+        nameTxtField.addKeyListener(new KeyAdapter() {
         	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == e.VK_ENTER) {
-    				if (studNumTxtField.getText().equals("") || nameTextField.getText().equals("") || pinField.getText().equals("")) {
+    				if (studNumTxtField.getText().equals("") || nameTxtField.getText().equals("") || pinField.getText().equals("")) {
     					JOptionPane.showMessageDialog(ActivateAccount.this, "Make sure that all fields are not empty!");
     				} else if (studNumTxtField.getText().length() != 7 || pinField.getText().length() != 6) {
     					if (studNumTxtField.getText().length() != 7) {
@@ -208,18 +223,29 @@ public class ActivateAccount extends JFrame {
     						JOptionPane.showMessageDialog(ActivateAccount.this, "PIN No. needs exactly 6 characters!");
     					}
     				} else {
-    					String sn = studNumTxtField.getText();
-    					String name = nameTextField.getText();
-    					String bal = "0.00";
-    					String pin = pinField.getText();
-    					
-    					Object[] data = {sn, name, bal, pin};
-    					database.addRow(data);
-    					
-    					login = new Landing(database, i);
-    					login.setVisible(true);
-    					login.setLocationRelativeTo(null);
-    					ActivateAccount.this.dispose();
+    					boolean studentExists = false;
+    					for (int j = 0; j < database.getRowCount(); j++) {
+    						if (studNumTxtField.getText().equals(database.getValueAt(j, 0))) {
+    							studentExists = true;
+    							JOptionPane.showMessageDialog(ActivateAccount.this, "This student number has already been activated!");
+    							studNumTxtField.setText(null);
+    							break;
+    						}
+    					}
+    					if (!studentExists) {
+    						String sn = studNumTxtField.getText();
+    						String name = nameTxtField.getText();
+    						String bal = "0.00";
+    						String pin = pinField.getText();
+    						
+    						Object[] data = {sn, name, bal, pin};
+    						database.addRow(data);
+    						
+    						login = new Landing(database, i);
+    						login.setVisible(true);
+    						login.setLocationRelativeTo(null);
+    						ActivateAccount.this.dispose();
+    					}
     				}
         		}
         	}
@@ -229,7 +255,7 @@ public class ActivateAccount extends JFrame {
         	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == e.VK_ENTER) {
-    				if (studNumTxtField.getText().equals("") || nameTextField.getText().equals("") || pinField.getText().equals("")) {
+    				if (studNumTxtField.getText().equals("") || nameTxtField.getText().equals("") || pinField.getText().equals("")) {
     					JOptionPane.showMessageDialog(ActivateAccount.this, "Make sure that all fields are not empty!");
     				} else if (studNumTxtField.getText().length() != 7 || pinField.getText().length() != 6) {
     					if (studNumTxtField.getText().length() != 7) {
@@ -240,18 +266,29 @@ public class ActivateAccount extends JFrame {
     						JOptionPane.showMessageDialog(ActivateAccount.this, "PIN No. needs exactly 6 characters!");
     					}
     				} else {
-    					String sn = studNumTxtField.getText();
-    					String name = nameTextField.getText();
-    					String bal = "0.00";
-    					String pin = pinField.getText();
-    					
-    					Object[] data = {sn, name, bal, pin};
-    					database.addRow(data);
-    					
-    					login = new Landing(database, i);
-    					login.setVisible(true);
-    					login.setLocationRelativeTo(null);
-    					ActivateAccount.this.dispose();
+    					boolean studentExists = false;
+    					for (int j = 0; j < database.getRowCount(); j++) {
+    						if (studNumTxtField.getText().equals(database.getValueAt(j, 0))) {
+    							studentExists = true;
+    							JOptionPane.showMessageDialog(ActivateAccount.this, "This student number has already been activated!");
+    							studNumTxtField.setText(null);
+    							break;
+    						}
+    					}
+    					if (!studentExists) {
+    						String sn = studNumTxtField.getText();
+    						String name = nameTxtField.getText();
+    						String bal = "0.00";
+    						String pin = pinField.getText();
+    						
+    						Object[] data = {sn, name, bal, pin};
+    						database.addRow(data);
+    						
+    						login = new Landing(database, i);
+    						login.setVisible(true);
+    						login.setLocationRelativeTo(null);
+    						ActivateAccount.this.dispose();
+    					}
     				}
         		}
         	}
@@ -268,7 +305,7 @@ public class ActivateAccount extends JFrame {
         	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == e.VK_ENTER) {
-    				if (studNumTxtField.getText().equals("") || nameTextField.getText().equals("") || pinField.getText().equals("")) {
+    				if (studNumTxtField.getText().equals("") || nameTxtField.getText().equals("") || pinField.getText().equals("")) {
     					JOptionPane.showMessageDialog(ActivateAccount.this, "Make sure that all fields are not empty!");
     				} else if (studNumTxtField.getText().length() != 7 || pinField.getText().length() != 6) {
     					if (studNumTxtField.getText().length() != 7) {
@@ -279,18 +316,29 @@ public class ActivateAccount extends JFrame {
     						JOptionPane.showMessageDialog(ActivateAccount.this, "PIN No. needs exactly 6 characters!");
     					}
     				} else {
-    					String sn = studNumTxtField.getText();
-    					String name = nameTextField.getText();
-    					String bal = "0.00";
-    					String pin = pinField.getText();
-    					
-    					Object[] data = {sn, name, bal, pin};
-    					database.addRow(data);
-    					
-    					login = new Landing(database, i);
-    					login.setVisible(true);
-    					login.setLocationRelativeTo(null);
-    					ActivateAccount.this.dispose();
+    					boolean studentExists = false;
+    					for (int j = 0; j < database.getRowCount(); j++) {
+    						if (studNumTxtField.getText().equals(database.getValueAt(j, 0))) {
+    							studentExists = true;
+    							JOptionPane.showMessageDialog(ActivateAccount.this, "This student number has already been activated!");
+    							studNumTxtField.setText(null);
+    							break;
+    						}
+    					}
+    					if (!studentExists) {
+    						String sn = studNumTxtField.getText();
+    						String name = nameTxtField.getText();
+    						String bal = "0.00";
+    						String pin = pinField.getText();
+    						
+    						Object[] data = {sn, name, bal, pin};
+    						database.addRow(data);
+    						
+    						login = new Landing(database, i);
+    						login.setVisible(true);
+    						login.setLocationRelativeTo(null);
+    						ActivateAccount.this.dispose();
+    					}
     				}
         		}
         	}
@@ -300,6 +348,16 @@ public class ActivateAccount extends JFrame {
             	if(!Character.isDigit(c)) {
             		e.consume();
             	}
+        	}
+        });
+        
+        loginLbl.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		login = new Landing(database, 0);
+        		login.setVisible(true);
+        		login.setLocationRelativeTo(null);
+        		ActivateAccount.this.dispose();
         	}
         });
     }

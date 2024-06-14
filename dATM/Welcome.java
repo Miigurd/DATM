@@ -14,9 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
@@ -30,7 +27,7 @@ public class Welcome extends JFrame {
     private BufferedImage backgroundImage;
     private Landing login;
     
-    private String[] header = {"STUDENT NUMBER", "FIRST NAME", "LAST NAME", "PIN"};
+    private String[] header = {"STUDENT NUMBER", "NAME", "BALANCE", "PIN"};
 	private String[][] data = {{"2300650", "MAG-USARA, KIRT ASIA", "69420.00", "172826"},
 							   {"2300649", "FATAL, MOISES JR.", "42690.00", "232323"},
 							   {"2300646", "FARINAS, JORICK CHRISTIAN", "10000.00", "696969"},
@@ -90,8 +87,8 @@ public class Welcome extends JFrame {
         bgPane.setLayout(null);
         
         // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
-        logoPanel.setBounds(300, 60, 400, 200);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
+        logoPnl.setBounds(300, 60, 400, 200);
         
         JButton welcomeBtn = new RoundedButton("Welcome!");
         welcomeBtn.setBounds(420, 320, 170, 63);
@@ -99,9 +96,9 @@ public class Welcome extends JFrame {
         welcomeBtn.setBackground(new Color(0, 191, 255));
         welcomeBtn.setForeground(new Color(211, 211, 211));
         
-        // ------------- ADDING COMPONENTS TO PANEL -------------
+        // ------------- ADDING COMPONENTS -------------
 
-        bgPane.add(logoPanel);
+        bgPane.add(logoPnl);
         bgPane.add(welcomeBtn);
         
         // ------------- EVENTS -------------

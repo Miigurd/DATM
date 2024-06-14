@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -24,8 +23,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,11 +32,9 @@ import java.awt.event.KeyEvent;
 public class Landing extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JFrame frame;
     private JPanel bgPane;
     private BufferedImage backgroundImage;
     private Dashboard dashboard;
-    private Balance balance;
     private ActivateAccount activate;
     private DefaultTableModel database;
     private int i;
@@ -99,9 +94,8 @@ public class Landing extends JFrame {
         loginPanel.setBounds(46, 71, 410, 634);
         loginPanel.setLayout(null);
         
-        // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
-        logoPanel.setBounds(55, 80, 310, 100);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
+        logoPnl.setBounds(55, 80, 310, 100);
         
         JLabel userLabel = new JLabel("USER LOGIN");
         userLabel.setBounds(31, 221, 352, 31);
@@ -121,22 +115,22 @@ public class Landing extends JFrame {
         userTextField.setBounds(79, 294, 280, 82);
         userTextField.setFont(new Font("Tahoma", Font.PLAIN, 40));
         userTextField.setHorizontalAlignment(SwingConstants.CENTER);
-        userTextField.setColumns(10);	
+        userTextField.setColumns(10);
         
         JLabel activateLabel = new JLabel("Activate Account");
-        activateLabel.setBounds(0, 386, 410, 39);
-        activateLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 25));
+        activateLabel.setBounds(3, 435, 410, 39);
+        activateLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 12));
         activateLabel.setForeground(new Color(46, 139, 87));
         activateLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         JButton loginBTN = new RoundedButton("Login");
-        loginBTN.setBounds(130, 440, 136, 40);
+        loginBTN.setBounds(140, 400, 136, 40);
         loginBTN.setBackground(new Color(26, 172, 119));
         
-        // ------------- ADDING COMPONENTS TO PANEL -------------
+        // ------------- ADDING COMPONENTS -------------
 
         bgPane.add(loginPanel);
-        loginPanel.add(logoPanel);
+        loginPanel.add(logoPnl);
         loginPanel.add(userLabel);
         loginPanel.add(userLblPane);
         loginPanel.add(profileIcon);

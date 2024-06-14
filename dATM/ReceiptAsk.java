@@ -34,6 +34,7 @@ public class ReceiptAsk extends JFrame {
     private int i;
     private int yn;
     private String a;
+    private String dataBalance;
 
     /**
      * Launch the application.
@@ -42,7 +43,7 @@ public class ReceiptAsk extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                	ReceiptAsk frame = new ReceiptAsk(new DefaultTableModel(), 0, new String());
+                	ReceiptAsk frame = new ReceiptAsk(new DefaultTableModel(), 0, new String(), new String());
                     frame.setVisible(true);
                     frame.setLocationRelativeTo(null);
                 } catch (Exception e) {
@@ -55,10 +56,11 @@ public class ReceiptAsk extends JFrame {
     /**
      * Create the application.
      */
-    public ReceiptAsk(DefaultTableModel database, int i, String a) {
+    public ReceiptAsk(DefaultTableModel database, int i, String a, String dataBalance) {
     	this.database= database;
     	this.i = i;
     	this.a = a;
+    	this.dataBalance = dataBalance;
     	
         setSize(1024, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,71 +91,57 @@ public class ReceiptAsk extends JFrame {
         bgPane.setLayout(null);
 
         // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
-        logoPanel.setBounds(350, 80, 250, 100);
-        bgPane.add(logoPanel);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
+        logoPnl.setBounds(350, 80, 250, 100);
 
-        JPanel DepositDashboardInfoPane = new JPanel();
-        DepositDashboardInfoPane.setBackground(new Color(255, 255, 255));
-        DepositDashboardInfoPane.setBounds(45, 238, 930, 480);
-        bgPane.add(DepositDashboardInfoPane);
-        DepositDashboardInfoPane.setLayout(null);
+        JPanel receiptAskPnl = new JPanel();
+        receiptAskPnl.setLayout(null);
+        receiptAskPnl.setBounds(45, 238, 930, 480);
+        receiptAskPnl.setBackground(new Color(255, 255, 255));
 
-        JButton yesBtn = new JButton("YES");
-        yesBtn.setForeground(new Color(255, 255, 255));
-        yesBtn.setBackground(new Color(0, 128, 0));
-        yesBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-        yesBtn.setBounds(712, 271, 135, 63);
-        DepositDashboardInfoPane.add(yesBtn);
-
-        JLabel askLabel = new JLabel("DO YOU WANT A RECEIPT?");
-        askLabel.setBounds(35, 39, 597, 73);
-        DepositDashboardInfoPane.add(askLabel);
-        askLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        askLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-
-        JLabel balanceLbl = new JLabel(" ");
-        balanceLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
-        balanceLbl.setBounds(662, 87, 258, 25);
-        DepositDashboardInfoPane.add(balanceLbl);
-
-        JLabel NameLbl = new JLabel(" ");
-        NameLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
-        NameLbl.setBounds(260, 115, 135, 25);
-        DepositDashboardInfoPane.add(NameLbl);
-
-        JLabel NumberLbl = new JLabel(" ");
-        NumberLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
-        NumberLbl.setBounds(238, 144, 135, 25);
-        DepositDashboardInfoPane.add(NumberLbl);
-
-        JButton noBtn = new JButton("NO");
-        noBtn.setForeground(new Color(240, 255, 255));
-        noBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-        noBtn.setBackground(new Color(0, 128, 0));
-        noBtn.setBounds(712, 367, 135, 63);
-        DepositDashboardInfoPane.add(noBtn);
+        JLabel askLbl = new JLabel("DO YOU WANT A RECEIPT?");
+        askLbl.setBounds(35, 39, 597, 73);
+        askLbl.setFont(new Font("Tahoma", Font.BOLD, 40));
+        askLbl.setHorizontalAlignment(SwingConstants.CENTER);
 
         JTextPane infoText = new JTextPane();
-        infoText.setFont(new Font("Monospaced", Font.PLAIN, 18));
         infoText.setText("Skip the receipt and help reduce waste.\nEach receipt declined saves paper and ink, reducing landfill waste and chemical pollution. Join us in this small step towards a more sustainable future. Next time, just say \"No receipt, please!\"");
-
-        // Justify the text
+        infoText.setBounds(76, 146, 458, 242);
+        infoText.setFont(new Font("Monospaced", Font.PLAIN, 18));
+        infoText.setEditable(false);
+        
         StyledDocument doc = infoText.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_JUSTIFIED);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
-        infoText.setBounds(76, 146, 458, 242);
-        infoText.setEditable(false);
-        DepositDashboardInfoPane.add(infoText);
+        JButton yesBtn = new JButton("YES");
+        yesBtn.setBounds(712, 271, 135, 63);
+        yesBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+        yesBtn.setBackground(new Color(0, 128, 0));
+        yesBtn.setForeground(new Color(255, 255, 255));
+
+        JButton noBtn = new JButton("NO");
+        noBtn.setBounds(712, 367, 135, 63);
+        noBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+        noBtn.setBackground(new Color(0, 128, 0));
+        noBtn.setForeground(new Color(240, 255, 255));
         
-//      ------------- EVENTS ------------
+        // ------------- ADDING COMPONENTS -------------
+
+        bgPane.add(logoPnl);
+        bgPane.add(receiptAskPnl);
+        receiptAskPnl.add(askLbl);
+        receiptAskPnl.add(infoText);
+        receiptAskPnl.add(yesBtn);
+        receiptAskPnl.add(noBtn);
+        
+        // ------------- EVENTS -------------
 
         yesBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		yn = 1;
-        		pin = new PIN(database, i, a, yn);
+        		pin = new PIN(database, i, a, yn, dataBalance);
         		pin.setVisible(true);
         		pin.setLocationRelativeTo(null);
         		ReceiptAsk.this.dispose();
@@ -163,7 +151,7 @@ public class ReceiptAsk extends JFrame {
         noBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
         		yn = 2;
-        		pin = new PIN(database, i, a, yn);
+        		pin = new PIN(database, i, a, yn, dataBalance);
         		pin.setVisible(true);
         		pin.setLocationRelativeTo(null);
         		ReceiptAsk.this.dispose();

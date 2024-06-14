@@ -8,15 +8,12 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.Font;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -37,6 +34,7 @@ public class Withdraw extends JFrame {
 	private DefaultTableModel database;
 	private int i;
 	private String a;
+	private String dataBalance;
 
 	/**
 	 * Launch the application.
@@ -92,8 +90,8 @@ public class Withdraw extends JFrame {
 		setContentPane(bgPane);
 		
 		// Custom panel for logo image
-		JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
-		logoPanel.setBounds(380, 80, 250, 100);
+		JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
+		logoPnl.setBounds(380, 80, 250, 100);
 		bgPane.setLayout(null);
 		
 		JPanel withdrawPnl = new RoundedPanel();
@@ -106,13 +104,13 @@ public class Withdraw extends JFrame {
 		withdrawLbl.setFont(new Font("Tahoma", Font.BOLD, 35));
 		withdrawLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel accInfolbl = new JLabel("Account Information: ");
-		accInfolbl.setBounds(114, 79, 336, 33);
-		accInfolbl.setFont(new Font("Tahoma", Font.BOLD, 25));
+		JLabel accInfoLbl = new JLabel("Account Information: ");
+		accInfoLbl.setBounds(114, 79, 336, 33);
+		accInfoLbl.setFont(new Font("Tahoma", Font.BOLD, 25));
 		
-		JLabel accNamelbl = new JLabel("Client Name:");
-		accNamelbl.setBounds(140, 111, 140, 30);
-		accNamelbl.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JLabel accNameLbl = new JLabel("Client Name:");
+		accNameLbl.setBounds(140, 111, 140, 30);
+		accNameLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
 		JLabel nameLbl = new JLabel();
 		String getName = (String) database.getValueAt(i, 1);
@@ -121,9 +119,9 @@ public class Withdraw extends JFrame {
 		nameLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
 		nameLbl.setForeground(new Color(17, 141, 87));
 		
-		JLabel clientNumLbl = new JLabel("Client No.:");
-		clientNumLbl.setBounds(140, 140, 108, 30);
-		clientNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JLabel studNumLbl = new JLabel("Client No.:");
+		studNumLbl.setBounds(140, 140, 108, 30);
+		studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
 		JLabel numberLbl = new JLabel();
 		String getNum = (String) database.getValueAt(i, 0);
@@ -180,13 +178,13 @@ public class Withdraw extends JFrame {
 		
 //		------------- ADDING COMPONENTS TO PANEL -------------
 
-		bgPane.add(logoPanel);
+		bgPane.add(logoPnl);
 		bgPane.add(withdrawPnl);
 		withdrawPnl.add(withdrawLbl);
-		withdrawPnl.add(accInfolbl);
-		withdrawPnl.add(accNamelbl);
+		withdrawPnl.add(accInfoLbl);
+		withdrawPnl.add(accNameLbl);
 		withdrawPnl.add(nameLbl);
-		withdrawPnl.add(clientNumLbl);
+		withdrawPnl.add(studNumLbl);
 		withdrawPnl.add(numberLbl);
 		withdrawPnl.add(currentLbl);
 		withdrawPnl.add(balanceLbl);
@@ -220,9 +218,8 @@ public class Withdraw extends JFrame {
 	    				double totalBalance = Double.parseDouble(getBal);
 	    				double withdrawAmount = Double.parseDouble(amountTxtField.getText());
 	    				double finalBalance = totalBalance - withdrawAmount;
-	    				String dataBalance = Double.toString(finalBalance);
-	    				database.setValueAt(dataBalance, i, 2);
-	        			receiptAsk = new ReceiptAsk(database, i, a);
+	    				dataBalance = Double.toString(finalBalance);
+	        			receiptAsk = new ReceiptAsk(database, i, a, dataBalance);
 	    				receiptAsk.setVisible(true);
 	    				receiptAsk.setLocationRelativeTo(null);
 	    				Withdraw.this.dispose();
@@ -249,9 +246,8 @@ public class Withdraw extends JFrame {
     				double totalBalance = Double.parseDouble(getBal);
     				double withdrawAmount = Double.parseDouble(amountTxtField.getText());
     				double finalBalance = totalBalance - withdrawAmount;
-    				String dataBalance = Double.toString(finalBalance);
-    				database.setValueAt(dataBalance, i, 2);
-        			receiptAsk = new ReceiptAsk(database, i, a);
+    				dataBalance = Double.toString(finalBalance);
+        			receiptAsk = new ReceiptAsk(database, i, a, dataBalance);
     				receiptAsk.setVisible(true);
     				receiptAsk.setLocationRelativeTo(null);
     				Withdraw.this.dispose();

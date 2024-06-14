@@ -2,7 +2,6 @@ package dATM;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -18,12 +17,9 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
-
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JApplet;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,11 +29,8 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class PIN extends JFrame {
-
-	private JFrame frame;
 	private JPanel bgPane;
 	private BufferedImage backgroundImage;
-	private JPasswordField passwordField;
 	private Receipt receipt;
 	private End end;
 	private DefaultTableModel database;
@@ -45,6 +38,7 @@ public class PIN extends JFrame {
 	private int yn;
 	private Dashboard dashboard;
 	private String a;
+	private String dataBalance;
 	
 
 	/**
@@ -54,7 +48,7 @@ public class PIN extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PIN frame = new PIN(new DefaultTableModel(), 0, new String(), 0);
+					PIN frame = new PIN(new DefaultTableModel(), 0, new String(), 0, new String());
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -67,11 +61,12 @@ public class PIN extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public PIN(DefaultTableModel database, int i, String a, int yn) {
+	public PIN(DefaultTableModel database, int i, String a, int yn, String dataBalance) {
 		this.database = database;
 		this.i = i;
 		this.a = a;
 		this.yn = yn;
+		this.dataBalance = dataBalance;
 		
 		setSize(1024, 768);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,69 +98,57 @@ public class PIN extends JFrame {
 		// Custom panel for logo image
 		JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
 		logoPanel.setBounds(350, 80, 250, 100);
-		bgPane.add(logoPanel);
 		bgPane.setLayout(null);
 		
-		JPanel DepositDashboardInfoPane = new JPanel();
-		DepositDashboardInfoPane.setBackground(new Color(255, 255, 255));
-		DepositDashboardInfoPane.setBounds(45, 238, 930, 480);
-		bgPane.add(DepositDashboardInfoPane);
-		DepositDashboardInfoPane.setLayout(null);
+		JPanel pinPnl = new JPanel();
+		pinPnl.setLayout(null);
+		pinPnl.setBounds(45, 238, 930, 480);
+		pinPnl.setBackground(new Color(255, 255, 255));
 		
-		JButton cancelBtn = new RoundedButton("CANCEL");
-		cancelBtn.setBackground(new Color(0, 191, 255));
-		cancelBtn.setForeground(new Color(255, 255, 255));
-		cancelBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-		cancelBtn.setBounds(385, 367, 135, 63);
-		DepositDashboardInfoPane.add(cancelBtn);
+		JLabel pinLbl = new JLabel("Enter PIN");
+		pinLbl.setBounds(10, 25, 307, 43);
+		pinLbl.setFont(new Font("Tahoma", Font.BOLD, 35));
+		pinLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JButton confirmBtn = new RoundedButton("CONFIRM");
-		confirmBtn.setBackground(new Color(26, 172, 119));
-		confirmBtn.setForeground(new Color(240, 255, 255));
-		confirmBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-		confirmBtn.setBounds(137, 367, 135, 63);
-		DepositDashboardInfoPane.add(confirmBtn);
+		JPasswordField pinField = new JPasswordFieldLimit(6);
+		pinField.setBounds(78, 168, 765, 102);
+		pinField.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		pinField.setBackground(new Color(192, 192, 192));
+		pinField.setForeground(new Color(0, 100, 0));
+		pinField.setHorizontalAlignment(SwingConstants.CENTER);
+		pinField.setColumns(10);
 		
-		JLabel DepositDashboardLbl = new JLabel("Enter PIN");
-		DepositDashboardLbl.setBounds(10, 25, 307, 43);
-		DepositDashboardInfoPane.add(DepositDashboardLbl);
-		DepositDashboardLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		DepositDashboardLbl.setFont(new Font("Tahoma", Font.BOLD, 35));
-		
-		JLabel balanceLbl = new JLabel(" ");
-		balanceLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
-		balanceLbl.setBounds(662, 87, 258, 25);
-		DepositDashboardInfoPane.add(balanceLbl);
-		
-		JLabel NameLbl = new JLabel(" ");
-		NameLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
-		NameLbl.setBounds(260, 115, 135, 25);
-		DepositDashboardInfoPane.add(NameLbl);
-		
-		JLabel NumberLbl = new JLabel(" ");
-		NumberLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
-		NumberLbl.setBounds(238, 144, 135, 25);
-		DepositDashboardInfoPane.add(NumberLbl);
-		
-		JButton eraseBtn = new RoundedButton("DELETE");
+		JButton eraseBtn = new RoundedButton("CLEAR");
+		eraseBtn.setBounds(137, 367, 135, 63);
 		eraseBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-		eraseBtn.setBounds(635, 367, 135, 63);
 		eraseBtn.setBackground(new Color(255, 127, 127));
 		eraseBtn.setForeground(new Color(240, 255, 255));
-		DepositDashboardInfoPane.add(eraseBtn);
 		
-		passwordField = new JTextFieldLimit(6);
-		passwordField.setBackground(new Color(192, 192, 192));
-		passwordField.setForeground(new Color(0, 100, 0));
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 45));
-		passwordField.setBounds(78, 168, 765, 102);
-		DepositDashboardInfoPane.add(passwordField);
-		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordField.setColumns(10);
+		JButton cancelBtn = new RoundedButton("CANCEL");
+		cancelBtn.setBounds(385, 367, 135, 63);
+		cancelBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		cancelBtn.setBackground(new Color(0, 191, 255));
+		cancelBtn.setForeground(new Color(255, 255, 255));
+		
+		JButton confirmBtn = new RoundedButton("CONFIRM");
+		confirmBtn.setBounds(635, 367, 135, 63);
+		confirmBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		confirmBtn.setBackground(new Color(26, 172, 119));
+		confirmBtn.setForeground(new Color(240, 255, 255));
+		
+		// ------------- ADDING COMPONENTS -------------
+
+		bgPane.add(logoPanel);
+		bgPane.add(pinPnl);
+		pinPnl.add(pinLbl);
+		pinPnl.add(pinField);
+		pinPnl.add(eraseBtn);
+		pinPnl.add(cancelBtn);
+		pinPnl.add(confirmBtn);
 		
 		// ------------- EVENTS -------------
 		
-		passwordField.addKeyListener(new KeyAdapter() {
+		pinField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
     			char c = e.getKeyChar();
@@ -173,44 +156,13 @@ public class PIN extends JFrame {
         			e.consume();
         		}
 			}
-		});
-		
-		confirmBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (yn == 1) {
-					String getPIN = (String) database.getValueAt(i, 3);
-					if (passwordField.getText().equals(getPIN)) {
-						end = new End(database);
-						end.setVisible(true);
-						end.setLocation(50, 50);
-						receipt = new Receipt(database, i, a);
-						receipt.setVisible(true);
-						receipt.setLocation(1000, 135);
-						PIN.this.dispose();
-					}else {
-						passwordField.setText(null);
-					}
-				} else if (yn == 2) {
-					String getPIN = (String) database.getValueAt(i, 3);
-					if (passwordField.getText().equals(getPIN)) {
-						end = new End(database);
-						end.setVisible(true);
-						end.setLocationRelativeTo(null);
-						PIN.this.dispose();
-					}else {
-						passwordField.setText(null);
-					}
-				}
-			}
-		});
-		
-		passwordField.addKeyListener(new KeyAdapter() {
         	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == e.VK_ENTER) {
     				if (yn == 1) {
     					String getPIN = (String) database.getValueAt(i, 3);
-    					if (passwordField.getText().equals(getPIN)) {
+    					if (pinField.getText().equals(getPIN)) {
+    	    				database.setValueAt(dataBalance, i, 2);
     						end = new End(database);
     						end.setVisible(true);
     						end.setLocation(50, 50);
@@ -219,22 +171,54 @@ public class PIN extends JFrame {
     						receipt.setLocation(1000, 135);
     						PIN.this.dispose();
     					}else {
-    						passwordField.setText(null);
+    						pinField.setText(null);
     					}
     				} else if (yn == 2) {
     					String getPIN = (String) database.getValueAt(i, 3);
-    					if (passwordField.getText().equals(getPIN)) {
+    					if (pinField.getText().equals(getPIN)) {
+    	    				database.setValueAt(dataBalance, i, 2);
     						end = new End(database);
     						end.setVisible(true);
     						end.setLocationRelativeTo(null);
     						PIN.this.dispose();
     					}else {
-    						passwordField.setText(null);
+    						pinField.setText(null);
     					}
     				}
         	   }
             }
-        });
+		});
+		
+		confirmBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (yn == 1) {
+					String getPIN = (String) database.getValueAt(i, 3);
+					if (pinField.getText().equals(getPIN)) {
+	    				database.setValueAt(dataBalance, i, 2);
+						end = new End(database);
+						end.setVisible(true);
+						end.setLocation(50, 50);
+						receipt = new Receipt(database, i, a);
+						receipt.setVisible(true);
+						receipt.setLocation(1000, 135);
+						PIN.this.dispose();
+					}else {
+						pinField.setText(null);
+					}
+				} else if (yn == 2) {
+					String getPIN = (String) database.getValueAt(i, 3);
+					if (pinField.getText().equals(getPIN)) {
+	    				database.setValueAt(dataBalance, i, 2);
+						end = new End(database);
+						end.setVisible(true);
+						end.setLocationRelativeTo(null);
+						PIN.this.dispose();
+					}else {
+						pinField.setText(null);
+					}
+				}
+			}
+		});
 		
 		cancelBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -242,6 +226,12 @@ public class PIN extends JFrame {
 				dashboard.setVisible(true);
 				dashboard.setLocationRelativeTo(null);
 				PIN.this.dispose();
+			}
+		});
+		
+		eraseBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pinField.setText(null);
 			}
 		});
 		
@@ -270,10 +260,10 @@ public class PIN extends JFrame {
 		}
 	}
 	
-	class JTextFieldLimit extends JPasswordField {
+	class JPasswordFieldLimit extends JPasswordField {
 	    private int limit;
 
-	    public JTextFieldLimit(int limit) {
+	    public JPasswordFieldLimit(int limit) {
 	        super();
 	        this.limit = limit;
 	    }

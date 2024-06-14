@@ -8,15 +8,12 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.Font;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -37,6 +34,7 @@ public class Deposit extends JFrame {
 	private DefaultTableModel database;
 	private int i;
 	private String a;
+	private String dataBalance;
 
 	/**
 	 * Launch the application.
@@ -92,8 +90,8 @@ public class Deposit extends JFrame {
 		setContentPane(bgPane);
 		
 		// Custom panel for logo image
-		JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
-		logoPanel.setBounds(380, 80, 250, 100);
+		JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
+		logoPnl.setBounds(380, 80, 250, 100);
 		bgPane.setLayout(null);
 		
 		JPanel depositPnl = new JPanel();
@@ -121,9 +119,9 @@ public class Deposit extends JFrame {
 		nameLbl.setFont(new Font("Tahoma", Font.BOLD, 15));
 		nameLbl.setForeground(new Color(17, 141, 87));
 		
-		JLabel clientNumLbl = new JLabel("Client No.:");
-		clientNumLbl.setBounds(140, 140, 108, 30);
-		clientNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JLabel studNumLbl = new JLabel("Client No.:");
+		studNumLbl.setBounds(140, 140, 108, 30);
+		studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
 		JLabel numberLbl = new JLabel();
 		String getNum = (String) database.getValueAt(i, 0);
@@ -180,13 +178,13 @@ public class Deposit extends JFrame {
 		
 		// ------------- ADDING COMPONENTS TO PANEL -------------
 
-		bgPane.add(logoPanel);
+		bgPane.add(logoPnl);
 		bgPane.add(depositPnl);
 		depositPnl.add(depositLbl);
 		depositPnl.add(accInfolbl);
 		depositPnl.add(accNamelbl);
 		depositPnl.add(nameLbl);
-		depositPnl.add(clientNumLbl);
+		depositPnl.add(studNumLbl);
 		depositPnl.add(numberLbl);
 		depositPnl.add(currentLbl);
 		depositPnl.add(balanceLbl);
@@ -218,8 +216,7 @@ public class Deposit extends JFrame {
 					double depositAmount = Double.parseDouble(amountTxtField.getText());
 					double finalBalance = totalBalance + depositAmount;
 					String dataBalance = Double.toString(finalBalance);
-					database.setValueAt(dataBalance, i, 2);
-					receiptAsk = new ReceiptAsk(database, i, a);
+					receiptAsk = new ReceiptAsk(database, i, a, dataBalance);
 					receiptAsk.setVisible(true);
 					receiptAsk.setLocationRelativeTo(null);
 					Deposit.this.dispose();
@@ -243,8 +240,7 @@ public class Deposit extends JFrame {
 				double depositAmount = Double.parseDouble(amountTxtField.getText());
 				double finalBalance = totalBalance + depositAmount;
 				String dataBalance = Double.toString(finalBalance);
-				database.setValueAt(dataBalance, i, 2);
-				receiptAsk = new ReceiptAsk(database, i, a);
+				receiptAsk = new ReceiptAsk(database, i, a, dataBalance);
 				receiptAsk.setVisible(true);
 				receiptAsk.setLocationRelativeTo(null);
 				Deposit.this.dispose();

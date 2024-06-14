@@ -8,15 +8,12 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.Font;
-import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -31,9 +28,7 @@ public class End extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel bgPane;
 	private BufferedImage backgroundImage;
-	private JTextField amountTxtField;
 	private Landing login;
-	private Receipt receipt;
 	private DefaultTableModel database;
 
 	/**
@@ -87,39 +82,41 @@ public class End extends JFrame {
 		bgPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(bgPane);
 		
-		// Custom panel for logo image
-		JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
-		logoPanel.setBounds(380, 80, 250, 100);
-		bgPane.add(logoPanel);
+		JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM Dashboard.png");
+		logoPnl.setBounds(380, 80, 250, 100);
 		bgPane.setLayout(null);
 		
-		JPanel endPane = new JPanel();
-		endPane.setBackground(new Color(255, 255, 255));
-		endPane.setBounds(38, 238, 930, 480);
-		bgPane.add(endPane);
-		endPane.setLayout(null);
+		JPanel endPnl = new JPanel();
+		endPnl.setLayout(null);
+		endPnl.setBounds(38, 238, 930, 480);
+		endPnl.setBackground(new Color(255, 255, 255));
 		
 		JLabel thankYouLbl = new JLabel("Thank You!");
+		thankYouLbl.setBounds(170, 55, 543, 60);
 		thankYouLbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 50));
 		thankYouLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		thankYouLbl.setBounds(170, 55, 543, 60);
-		endPane.add(thankYouLbl);
 		
-		JTextPane txtpnThankYou = new JTextPane();
-		txtpnThankYou.setEditable(false);
-		txtpnThankYou.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		txtpnThankYou.setText("Thank you for using our DATM services!\nWe appreciate your business and hope you found the experience convenient.");
-		txtpnThankYou.setBounds(68, 151, 830, 153);
-		endPane.add(txtpnThankYou);
+		JTextPane thankYouTxtPn = new JTextPane();
+		thankYouTxtPn.setBounds(68, 151, 830, 153);
+		thankYouTxtPn.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		thankYouTxtPn.setText("Thank you for using our DATM services!\nWe appreciate your business and hope you found the experience convenient.");
+		thankYouTxtPn.setEditable(false);
 		
 		JButton loginBtn = new RoundedButton("Back to Login");
 		loginBtn.setBounds(380, 376, 200, 63);
 		loginBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
 		loginBtn.setBackground(new Color(26, 172, 119));
 		loginBtn.setForeground(new Color(240, 255, 255));
-		endPane.add(loginBtn);
 		
-//		------------- EVENTS -------------
+		// ------------- ADDING COMPONENTS -------------
+
+		bgPane.add(logoPnl);
+		bgPane.add(endPnl);
+		endPnl.add(thankYouLbl);
+		endPnl.add(thankYouTxtPn);
+		endPnl.add(loginBtn);
+		
+		// ------------- EVENTS -------------
 		
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

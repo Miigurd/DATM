@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,11 +20,12 @@ import java.awt.Font;
 public class Dashboard extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel bgPane;
 	private BufferedImage backgroundImage;
 	private Balance balance;
 	private Withdraw withdraw;
 	private Deposit deposit;
+	private Landing login;
 	private DeactivateAccount deactivate;
 	private DefaultTableModel database;
 	private int i;
@@ -67,7 +67,7 @@ public class Dashboard extends JFrame {
 		}
 
 		// Custom JPanel for background image
-		contentPane = new JPanel() {
+		bgPane = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -80,49 +80,55 @@ public class Dashboard extends JFrame {
 			}
 		};
 
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);  // Using null layout for custom placement of components
+		bgPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(bgPane);
+		bgPane.setLayout(null);
 		
-		// Custom panel for logo image
-		JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Desktop\\School\\1CS-A\\2nd Sem\\CCS103\\dATM img\\Dangal ATM Dashboard.png");
-		logoPanel.setBounds(175, 15, 200, 80);
-		contentPane.add(logoPanel);
+		JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Desktop\\School\\1CS-A\\2nd Sem\\CCS103\\dATM img\\Dangal ATM Dashboard.png");
+		logoPnl.setBounds(175, 15, 200, 80);
 		
-		JButton CBbtn = new JButton("Check Balance");
-		
-		CBbtn.setText("CHECK BALANCE");
-		CBbtn.setForeground(new Color(0, 102, 51));
-		CBbtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
-		CBbtn.setBounds(55, 108, 435, 159);
-		CBbtn.setBackground(new Color(153, 204, 153));
-		contentPane.add(CBbtn);
+		JButton balancebtn = new JButton("CHECK BALANCE");
+		balancebtn.setBounds(55, 108, 435, 159);
+		balancebtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
+		balancebtn.setBackground(new Color(153, 204, 153));
+		balancebtn.setForeground(new Color(0, 102, 51));
 		
 		JButton withdrawBtn = new JButton("WITHDRAW");
-		
+		withdrawBtn.setBounds(55, 309, 435, 159);
 		withdrawBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
 		withdrawBtn.setBackground(new Color(153, 204, 153));
 		withdrawBtn.setForeground(new Color(0, 102, 51));
-		withdrawBtn.setBounds(55, 309, 435, 159);
-		contentPane.add(withdrawBtn);
 		
 		JButton depositBtn = new JButton("DEPOSIT");
-		depositBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
-		depositBtn.setForeground(new Color(0, 102, 51));
-		depositBtn.setBackground(new Color(153, 204, 153));
 		depositBtn.setBounds(55, 506, 435, 159);
-		contentPane.add(depositBtn);
+		depositBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
+		depositBtn.setBackground(new Color(153, 204, 153));
+		depositBtn.setForeground(new Color(0, 102, 51));
+		
+		JButton logoutBtn = new JButton("LOGOUT");
+		logoutBtn.setBounds(527, 309, 435, 159);
+		logoutBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
+		logoutBtn.setBackground(new Color(153, 204, 153));
+		logoutBtn.setForeground(new Color(0, 102, 51));
 		
 		JButton deactivateBtn = new JButton("DEACTIVATE");
-		deactivateBtn.setForeground(new Color(0, 102, 51));
+		deactivateBtn.setBounds(527, 506, 435, 159);
 		deactivateBtn.setFont(new Font("Poppins Medium", Font.BOLD, 40));
 		deactivateBtn.setBackground(new Color(255, 127, 127));
-		deactivateBtn.setBounds(527, 506, 435, 159);
-		contentPane.add(deactivateBtn);
+		deactivateBtn.setForeground(new Color(0, 102, 51));
 		
-//		------------- EVENTS -----------
+		// ------------- ADDING COMPONENTS -------------
+
+		bgPane.add(logoPnl);
+		bgPane.add(balancebtn);
+		bgPane.add(withdrawBtn);
+		bgPane.add(depositBtn);
+		bgPane.add(logoutBtn);
+		bgPane.add(deactivateBtn);
 		
-		CBbtn.addActionListener(new ActionListener() {	
+		// ------------- EVENTS -----------
+		
+		balancebtn.addActionListener(new ActionListener() {	
 			public void actionPerformed(ActionEvent e) {
 				balance = new Balance(database, i );
 				balance.setVisible(true);
@@ -147,6 +153,14 @@ public class Dashboard extends JFrame {
 				deposit = new Deposit(database, i, a);
 				deposit.setVisible(true);
 				deposit.setLocationRelativeTo(null);
+				Dashboard.this.dispose();
+			}
+		});
+		logoutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				login = new Landing(database, 0);
+				login.setVisible(true);
+				login.setLocationRelativeTo(null);
 				Dashboard.this.dispose();
 			}
 		});

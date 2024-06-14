@@ -23,27 +23,22 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JSplitPane;
 import javax.swing.JPasswordField;
 
 public class DeactivateAccount extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JFrame frame;
-    private JPanel ActivateAccountPane;
+    private JPanel bgPane;
     private BufferedImage backgroundImage;
-	private JTextField studNumTxtField;
 	private Landing login;
+	private Dashboard dashboard;
 	private DefaultTableModel database;
 	private int i;
-	private JPasswordField pinField;
 	
     /**
      * Launch the application.
@@ -80,7 +75,7 @@ public class DeactivateAccount extends JFrame {
         }
 
         // Background panel
-        ActivateAccountPane = new JPanel() {
+        bgPane = new JPanel() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -92,66 +87,76 @@ public class DeactivateAccount extends JFrame {
             }
         };
 
-        ActivateAccountPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(ActivateAccountPane);
-        ActivateAccountPane.setLayout(null);
+        bgPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(bgPane);
+        bgPane.setLayout(null);
         
-        JPanel loginPanel = new JPanel();
-        loginPanel.setBackground(SystemColor.control);
-        loginPanel.setBounds(46, 71, 410, 634);
-        ActivateAccountPane.add(loginPanel);
-        loginPanel.setLayout(null);
+        JPanel deactivatePnl = new JPanel();
+        deactivatePnl.setLayout(null);
+        deactivatePnl.setBounds(46, 71, 410, 634);
+        deactivatePnl.setBackground(SystemColor.control);
         
-        // Custom panel for logo image
-        JPanel logoPanel = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
-        logoPanel.setBounds(55, 80, 310, 100);
-        loginPanel.add(logoPanel);
+        JPanel logoPnl = new ImagePanel("C:\\Users\\Kirt Asia\\Dangal-ATM\\dATM\\img\\Dangal ATM.png");
+        logoPnl.setBounds(55, 80, 310, 100);
         
-        JLabel customerLabel = new JLabel("Deactivate Account");
-        customerLabel.setForeground(new Color(46, 139, 87));
-        customerLabel.setFont(new Font("Poppins", Font.BOLD, 25));
-        customerLabel.setBackground(Color.GREEN);
-        customerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        customerLabel.setBounds(31, 221, 352, 31);
-        loginPanel.add(customerLabel);
+        JLabel deactivateLbl = new JLabel("Deactivate Account");
+        deactivateLbl.setBounds(31, 221, 352, 31);
+        deactivateLbl.setFont(new Font("Poppins", Font.BOLD, 25));
+        deactivateLbl.setBackground(Color.GREEN);
+        deactivateLbl.setForeground(new Color(46, 139, 87));
+        deactivateLbl.setHorizontalAlignment(SwingConstants.CENTER);
         
-        // Custom panel with rounded corners
-        JPanel cuslblPane = new RoundedPanel(30); 
-        cuslblPane.setBackground(new Color(144, 238, 144));
-        cuslblPane.setBounds(31, 210, 350, 53);
-        loginPanel.add(cuslblPane);
+        JPanel deactivateLblPane = new RoundedPanel(30); 
+        deactivateLblPane.setBounds(31, 210, 350, 53);
+        deactivateLblPane.setBackground(new Color(144, 238, 144));
         
-        JButton deactBTN = new RoundedButton("Deactivate");
-        deactBTN.setBackground(new Color(102, 255, 102));
-        deactBTN.setBounds(130, 420, 136, 40);
-        loginPanel.add(deactBTN);
-        
-        studNumTxtField = new JTextField();
-        studNumTxtField.setHorizontalAlignment(SwingConstants.CENTER);
-        studNumTxtField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        studNumTxtField.setColumns(10);
-        studNumTxtField.setBounds(128, 304, 241, 31);
-        loginPanel.add(studNumTxtField);
-        
-        JLabel studNumLbl = new JLabel("Student Number :");
+        JLabel studNumLbl = new JLabel("Student Number:");
+        studNumLbl.setBounds(10, 304, 110, 31);
         studNumLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        studNumLbl.setBounds(10, 304, 122, 31);
-        loginPanel.add(studNumLbl);
+        studNumLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        JLabel pinLbl = new JLabel("Enter Your Pin :");
+        JTextField studNumTxtField = new JTextFieldLimit(7);
+        studNumTxtField.setBounds(128, 304, 241, 31);
+        studNumTxtField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        studNumTxtField.setHorizontalAlignment(SwingConstants.CENTER);
+        studNumTxtField.setColumns(10);
+        
+        JLabel pinLbl = new JLabel("PIN:");
+        pinLbl.setBounds(10, 358, 110, 31);
         pinLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        pinLbl.setBounds(10, 358, 108, 31);
-        loginPanel.add(pinLbl);
+        pinLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        pinField = new JPasswordFieldLimit(6);
+        JPasswordField pinField = new JPasswordFieldLimit(6);
         pinField.setBounds(128, 358, 241, 31);
+        pinField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         pinField.setHorizontalAlignment(SwingConstants.CENTER);
-        pinField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        loginPanel.add(pinField);
         
-        // ------------- Events -------------
+        JButton deactivateBtn = new RoundedButton("Deactivate");
+        deactivateBtn.setBounds(140, 420, 136, 40);
+        deactivateBtn.setBackground(new Color(255, 127, 127));
         
-        deactBTN.addMouseListener(new MouseAdapter() {
+        JLabel backLbl = new JLabel("Back");
+        backLbl.setBounds(3, 455, 410, 39);
+        backLbl.setFont(new Font("Poppins Medium", Font.PLAIN, 12));
+        backLbl.setForeground(new Color(46, 139, 87));
+        backLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // ------------- ADDING COMPONENTS -------------
+
+        bgPane.add(deactivatePnl);
+        deactivatePnl.add(logoPnl);
+        deactivatePnl.add(deactivateLbl);
+        deactivatePnl.add(deactivateLblPane);
+        deactivatePnl.add(studNumLbl);
+        deactivatePnl.add(studNumTxtField);
+        deactivatePnl.add(pinLbl);
+        deactivatePnl.add(pinField);
+        deactivatePnl.add(deactivateBtn);
+        deactivatePnl.add(backLbl);
+        
+        // ------------- EVENTS -------------
+        
+        deactivateBtn.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		if (studNumTxtField.getText().equals(database.getValueAt(i, 0)) && pinField.getText().equals(database.getValueAt(i, 3))) {
@@ -194,6 +199,13 @@ public class DeactivateAccount extends JFrame {
         
         studNumTxtField.addKeyListener(new KeyAdapter() {
         	@Override
+        	public void keyTyped(KeyEvent e) {
+        		char c = e.getKeyChar();
+            	if(!Character.isDigit(c)) {
+            		e.consume();
+            	}
+        	}
+        	@Override
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == e.VK_ENTER) {
             		if (studNumTxtField.getText().equals(database.getValueAt(i, 0)) && pinField.getText().equals(database.getValueAt(i, 3))) {
@@ -208,6 +220,16 @@ public class DeactivateAccount extends JFrame {
             		}
         	   }
             }
+        });
+        
+        backLbl.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		dashboard = new Dashboard(database, i);
+        		dashboard.setVisible(true);
+        		dashboard.setLocationRelativeTo(null);
+        		DeactivateAccount.this.dispose();
+        	}
         });
         
     }
@@ -296,6 +318,32 @@ public class DeactivateAccount extends JFrame {
 	    private int limit;
 
 	    public JPasswordFieldLimit(int limit) {
+	        super();
+	        this.limit = limit;
+	    }
+
+	    @Override
+	    protected Document createDefaultModel() {
+	        return new LimitDocument();
+	    }
+
+	    private class LimitDocument extends PlainDocument {
+
+	        @Override
+	        public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+	            if (str == null) return;
+
+	            if ((getLength() + str.length()) <= limit) {
+	                super.insertString(offset, str, attr);
+	            }
+	        }       
+	    }
+	}
+    
+    class JTextFieldLimit extends JTextField {
+	    private int limit;
+
+	    public JTextFieldLimit(int limit) {
 	        super();
 	        this.limit = limit;
 	    }
