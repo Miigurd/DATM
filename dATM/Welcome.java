@@ -8,7 +8,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,11 +27,11 @@ public class Welcome extends JFrame {
     private Landing login;
     
     private String[] header = {"STUDENT NUMBER", "NAME", "BALANCE", "PIN"};
-	private String[][] data = {{"2300650", "MAG-USARA, KIRT ASIA", "69420.00", "172826"},
-							   {"2300649", "FATAL, MOISES JR.", "42690.00", "232323"},
-							   {"2300646", "FARINAS, JORICK CHRISTIAN", "10000.00", "696969"},
-							   {"2300640", "ESCUZAR, EMIEL JAMES", "20000.00", "420420"},
-							   {"2302745", "PEGA, JEDE ISAIAH MAXWEIL", "30000.00", "069420"}};
+	private String[][] data = {{"2300650", "MAG-USARA, KIRT ASIA", "50000.00", "172826"},
+							   {"2300649", "FATAL, MOISES JR.", "50000.00", "232323"},
+							   {"2300646", "FARINAS, JORICK CHRISTIAN", "50000.00", "696969"},
+							   {"2300640", "ESCUZAR, EMIEL JAMES", "50000.00", "420420"},
+							   {"2302745", "PEGA, JEDE ISAIAH MAXWEIL", "50000.00", "069420"}};
 	
 	private DefaultTableModel database = new DefaultTableModel(data, header);
 
